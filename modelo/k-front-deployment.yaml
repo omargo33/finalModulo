@@ -35,7 +35,13 @@ spec:
   selector:
     app: model-frontend
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 8501
       targetPort: 8501
       nodePort: 30501
+    - name: prometheus
+      protocol: TCP
+      port: 8002
+      targetPort: 8002
+      nodePort: 30002

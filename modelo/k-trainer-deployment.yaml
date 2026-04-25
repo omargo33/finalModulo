@@ -11,11 +11,15 @@ spec:
   storageClassName: standard
 
 ---
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: model-trainer-data-base
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: model-trainer-data-base
   template:
     metadata:
       labels:
@@ -33,5 +37,18 @@ spec:
       - name: model-volume
         persistentVolumeClaim:
           claimName: model-pvc
-      restartPolicy: Never
-  backoffLimit: 2
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: model-trainer-data-base-service
+spec:
+  type: NodePort
+  selector:
+    app: model-trainer-data-base
+  ports:
+    - port: 8001
+      targetPort: 8001
+      nodePort: 30001

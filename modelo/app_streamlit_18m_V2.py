@@ -25,9 +25,10 @@ def iniciar_prometheus():
     # Exponer métricas en el puerto 8002 (ajusta según tu docker-compose)
     start_http_server(8002)
 
-# Iniciar el servidor de métricas en un hilo aparte
-threading.Thread(target=iniciar_prometheus, daemon=True).start()
 
+if "prometheus_started" not in st.session_state:
+    threading.Thread(target=iniciar_prometheus, daemon=True).start()
+    st.session_state["prometheus_started"] = True
 
 # Configuración de página
 st.set_page_config(

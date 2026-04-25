@@ -3,10 +3,12 @@
 # Contiene el pipeline principal para entrenamiento del modelo CNN multi-horizonte
 
 import os
+import wandb
 import numpy as np
 import pandas as pd
 import joblib
 import json
+import time
 import tensorflow as tf
 import logging
 from sklearn.metrics import (
@@ -23,7 +25,10 @@ from tensorflow.keras import layers, Model
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from prometheus_client import start_http_server
+from wandb.integration.keras import WandbCallback
 
+
+os.environ['WANDB_API_KEY'] = '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'  # Reemplaza por tu API key real o usa una variable de entorno
 
 # Configuración de logging
 logging.basicConfig(
@@ -358,6 +363,10 @@ def construir_modelo(X_train, MAX_HORIZONTE):
 
 def entrenar_modelo(modelo_cnn, X_train, y_train_list):
     """Entrena el modelo CNN multi-horizonte a 18 meses con early stopping y guardado del mejor modelo"""
+    wandb.init(project="cnn-multi-horizonte", config={
+        "epochs": 100,
+        "batch_size": 32
+    })
     callbacks = [
         EarlyStopping(monitor="val_loss", patience=10, restore_best_weights=True),
         ModelCheckpoint(
@@ -365,6 +374,7 @@ def entrenar_modelo(modelo_cnn, X_train, y_train_list):
             monitor="val_loss",
             save_best_only=True,
         ),
+        WandbCallback()
     ]
     val_frac = 0.2
     n_samples = X_train.shape[0]
@@ -487,5 +497,6 @@ def main():
     )
 
 if __name__ == "__main__":
-    start_http_server(8001)  # o 8002 según el servicio
     main()
+    print("Entrenamiento finalizado. Esperando 60 segundos para Prometheus scrape...")
+    time.sleep(120)

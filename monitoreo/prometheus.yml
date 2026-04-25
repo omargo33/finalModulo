@@ -2,9 +2,15 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: 'trainer'
+  - job_name: 'trainer-k8s'
     static_configs:
-      - targets: ['trainer:8001']
-  - job_name: 'frontend'
+      - targets: ['192.168.67.2:30001']
+  - job_name: 'frontend-k8s'
     static_configs:
-      - targets: ['frontend:8002']
+      - targets: ['192.168.67.2:30002']
+  - job_name: 'trainer-docker'
+    static_configs:
+      - targets: ['192.168.0.97:8001']
+  - job_name: 'frontend-docker'
+    static_configs:
+      - targets: ['192.168.0.97:8002']

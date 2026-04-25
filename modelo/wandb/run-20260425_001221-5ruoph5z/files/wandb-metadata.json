@@ -1,0 +1,28 @@
+{
+  "os":  "Linux-6.8.0-110-generic-x86_64-with-glibc2.39",
+  "python":  "CPython 3.12.3",
+  "startedAt":  "2026-04-25T05:12:21.809354Z",
+  "program":  "/home/ovelez/Documentos/cursos/Maestria/Produccion/finalModulo/modelo/train.py",
+  "codePath":  "modelo/train.py",
+  "codePathLocal":  "train.py",
+  "git":  {
+    "remote":  "https://github.com/omargo33/finalModulo.git",
+    "commit":  "8a194239b2c1f8225c951686f0c11486caed795e"
+  },
+  "email":  "omar.velez@yachaytech.edu.ec",
+  "root":  "/home/ovelez/Documentos/cursos/Maestria/Produccion/finalModulo/modelo",
+  "host":  "ovelez-NUC12WSHi7",
+  "executable":  "/home/ovelez/Documentos/cursos/Maestria/Produccion/finalModulo/modelo/.venv/bin/python3",
+  "cpu_count":  12,
+  "cpu_count_logical":  16,
+  "disk":  {
+    "/":  {
+      "total":  "1005867986944",
+      "used":  "456412565504"
+    }
+  },
+  "memory":  {
+    "total":  "33143771136"
+  },
+  "writerId":  "8k2cywctxjhdu13cj81h70qjij0zpeb1"
+}

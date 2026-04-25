@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile.trainer
     volumes:
       - modelos_cnn_data:/app/modelos_cnn
+    ports:
+      - "8001:8001"
     # Puedes agregar otras configuraciones como variables de entorno, etc.
     # environment:
     #   - ...
@@ -15,6 +17,7 @@ services:
       dockerfile: Dockerfile.front
     ports:
       - "8501:8501"
+      - "8002:8002"
     volumes:
       - modelos_cnn_data:/app/modelos_cnn
     # Puedes agregar otras configuraciones como variables de entorno, etc.

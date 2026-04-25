@@ -1,0 +1,42 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push trainer image
+        run: |
+          docker build -t omargo33/trainer-final:latest -f modelo/Dockerfile.trainer .
+          docker push omargo33/trainer-final:latest
+
+      - name: Build and push front image
+        run: |
+          docker build -t omargo33/front-final:latest -f modelo/Dockerfile.front .
+          docker push omargo33/front-final:latest
+
+  deploy:
+    runs-on: self-hosted
+    needs: build-and-push
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Iniciar minikube y aplicar manifiestos
+        run: |
+          minikube start
+          kubectl apply -f modelo/k-front-deployment.yaml
+          kubectl apply -f modelo/k-trainer-deployment.yaml

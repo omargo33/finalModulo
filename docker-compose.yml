@@ -1,0 +1,20 @@
+##
+## Docker Compose file for PostgreSQL database con carga automática de tablas y CSV
+##
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: analisis_db
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: mi_clave_segura
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+      - ./data:/data
+
+volumes:
+  postgres_data:

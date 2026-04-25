@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  trainer:
+    build:
+      dockerfile: Dockerfile.trainer
+    volumes:
+      - modelos_cnn_data:/app/modelos_cnn
+    # Puedes agregar otras configuraciones como variables de entorno, etc.
+    # environment:
+    #   - ...
+
+  frontend:
+    build:
+      dockerfile: Dockerfile.front
+    ports:
+      - "8501:8501"
+    volumes:
+      - modelos_cnn_data:/app/modelos_cnn
+    # Puedes agregar otras configuraciones como variables de entorno, etc.
+
+volumes:
+  modelos_cnn_data:
+
+  

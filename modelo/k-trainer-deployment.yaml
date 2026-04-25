@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: model-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: model-trainer-data-base
+spec:
+  template:
+    metadata:
+      labels:
+        app: model-trainer-data-base
+    spec:
+      containers:
+      - name: model-trainer-data-base
+        image: omargo33/trainer-final:1.0.1
+        volumeMounts:
+        - name: model-volume
+          mountPath: /app/modelos_cnn
+      volumes:
+      - name: model-volume
+        persistentVolumeClaim:
+          claimName: model-pvc
+      restartPolicy: Never
+  backoffLimit: 2

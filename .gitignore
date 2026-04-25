@@ -1,0 +1,46 @@
+# Archivos y carpetas de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+.Python
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+# Archivos de configuración y logs
+*.log
+*.pot
+*.mo
+# Archivos de pruebas y cobertura
+.coverage
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+# Archivos de Jupyter y checkpoints
+.ipynb_checkpoints/
+# Archivos de modelos y datos temporales
+*.h5
+*.hdf5
+*.sqlite3
+*.db
+*.dat
+*.csv
+*.tsv
+*.npz
+*.npy
+# Archivos de entorno y configuración
+.env
+.env.*
+.mypy_cache/
+.vscode/
+*/modelos_cnn/
+.idea/
+__pypackages__/
+# Archivos de Docker
+*.pid
+docker-compose.override.yml

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: model-frontend
+  template:
+    metadata:
+      labels:
+        app: model-frontend
+    spec:
+      containers:
+      - name: model-frontend
+        image: omargo33/front-final:1.0.2
+        ports:
+        - containerPort: 8501
+        volumeMounts:
+        - name: model-volume
+          mountPath: /app/modelos_cnn
+      volumes:
+      - name: model-volume
+        persistentVolumeClaim:
+          claimName: model-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: model-frontend-service
+spec:
+  type: NodePort
+  selector:
+    app: model-frontend
+  ports:
+    - protocol: TCP
+      port: 8501
+      targetPort: 8501
+      nodePort: 30501

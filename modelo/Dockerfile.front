@@ -1,0 +1,22 @@
+FROM tensorflow/tensorflow:2.11.0
+
+WORKDIR /app
+
+COPY app_streamlit_18m_V2.py /app/
+
+RUN pip install --upgrade pip
+RUN pip install joblib 
+RUN pip install numpy 
+RUN pip install pandas 
+RUN pip install plotly 
+RUN pip install streamlit==1.40.1 --timeout 120
+RUN pip install scikit-learn 
+RUN pip install "protobuf<4,>=3.20.0"
+RUN pip install matplotlib
+
+# La carpeta modelos_cnn se montará como volumen, pero la creamos por si acaso
+RUN mkdir -p /app/modelos_cnn
+
+EXPOSE 8501
+
+ENTRYPOINT ["sh", "-c", "chmod 644 /app/modelos_cnn/*.* && streamlit run app_streamlit_18m_V2.py"]

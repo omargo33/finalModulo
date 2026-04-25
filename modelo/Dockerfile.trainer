@@ -1,0 +1,21 @@
+FROM tensorflow/tensorflow:2.11.0
+
+WORKDIR /app
+
+COPY train.py /app/
+
+RUN pip install --upgrade pip
+RUN pip install joblib 
+RUN pip install numpy 
+RUN pip install pandas 
+RUN pip install plotly 
+RUN pip install scikit-learn 
+RUN pip install SQLAlchemy 
+RUN pip install streamlit==1.40.1 --timeout 120
+RUN pip install "protobuf<4,>=3.20.0" 
+RUN pip install psycopg2-binary
+
+# Crea la carpeta de salida para los modelos y datos
+RUN mkdir -p /app/modelos_cnn
+
+CMD ["python", "train.py"]

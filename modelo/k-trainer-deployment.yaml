@@ -23,7 +23,9 @@ spec:
     spec:
       containers:
       - name: model-trainer-data-base
-        image: omargo33/trainer-final:1.0.1
+        image: omargo33/trainer-final:1.0.7
+        ports:
+          - containerPort: 8001
         volumeMounts:
         - name: model-volume
           mountPath: /app/modelos_cnn

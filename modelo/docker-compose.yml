@@ -19,6 +19,10 @@ services:
       - modelos_cnn_data:/app/modelos_cnn
     # Puedes agregar otras configuraciones como variables de entorno, etc.
 
+
+
+
+
 volumes:
   modelos_cnn_data:
 

@@ -13,6 +13,7 @@ RUN pip install streamlit==1.40.1 --timeout 120
 RUN pip install scikit-learn 
 RUN pip install "protobuf<4,>=3.20.0"
 RUN pip install matplotlib
+RUN pip install prometheus_client
 
 # La carpeta modelos_cnn se montará como volumen, pero la creamos por si acaso
 RUN mkdir -p /app/modelos_cnn

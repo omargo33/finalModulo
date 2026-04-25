@@ -14,9 +14,10 @@ spec:
     spec:
       containers:
       - name: model-frontend
-        image: omargo33/front-final:1.0.2
+        image: omargo33/front-final:1.0.7
         ports:
         - containerPort: 8501
+        - containerPort: 8002
         volumeMounts:
         - name: model-volume
           mountPath: /app/modelos_cnn

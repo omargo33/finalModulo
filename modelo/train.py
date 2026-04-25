@@ -22,6 +22,8 @@ from sqlalchemy import create_engine
 from tensorflow.keras import layers, Model
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from prometheus_client import start_http_server
+
 
 # Configuración de logging
 logging.basicConfig(
@@ -484,6 +486,6 @@ def main():
         bloques_validos,
     )
 
-
 if __name__ == "__main__":
+    start_http_server(8001)  # o 8002 según el servicio
     main()

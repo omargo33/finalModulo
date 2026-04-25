@@ -8,9 +8,26 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+import threading
 
 from datetime import datetime, timedelta
 from tensorflow.keras.models import load_model
+
+from prometheus_client import start_http_server, Summary, Counter, REGISTRY
+# --- MÉTRICAS PROMETHEUS ---
+# Contador de predicciones (evita doble registro en recarga de Streamlit)
+try:
+    PREDICCIONES_TOTAL = Counter('predicciones_total', 'Número total de predicciones realizadas')
+except ValueError:
+    PREDICCIONES_TOTAL = REGISTRY._names_to_collectors['predicciones_total']
+
+def iniciar_prometheus():
+    # Exponer métricas en el puerto 8002 (ajusta según tu docker-compose)
+    start_http_server(8002)
+
+# Iniciar el servidor de métricas en un hilo aparte
+threading.Thread(target=iniciar_prometheus, daemon=True).start()
+
 
 # Configuración de página
 st.set_page_config(
@@ -136,6 +153,8 @@ def realizar_prediccion(X_input, horizonte):
     """
     if X_input is None:
         return None
+    # Contar la predicción
+    PREDICCIONES_TOTAL.inc()
     # Obtener todas las predicciones
     predicciones = modelo.predict(X_input, verbose=0)
 

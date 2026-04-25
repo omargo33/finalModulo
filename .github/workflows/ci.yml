@@ -21,12 +21,14 @@ jobs:
 
       - name: Build and push trainer image
         run: |
-          docker build -t omargo33/trainer-final:latest -f modelo/Dockerfile.trainer .
+          cd modelo
+          docker build -t omargo33/trainer-final:latest -f Dockerfile.trainer .
           docker push omargo33/trainer-final:latest
 
       - name: Build and push front image
         run: |
-          docker build -t omargo33/front-final:latest -f modelo/Dockerfile.front .
+          cd modelo
+          docker build -t omargo33/front-final:latest -f Dockerfile.front .
           docker push omargo33/front-final:latest
 
   deploy:
@@ -37,6 +39,6 @@ jobs:
 
       - name: Iniciar minikube y aplicar manifiestos
         run: |
-          minikube start
-          kubectl apply -f modelo/k-front-deployment.yaml
-          kubectl apply -f modelo/k-trainer-deployment.yaml
+          cd modelo
+          kubectl apply -f k-front-deployment.yaml
+          kubectl apply -f k-trainer-deployment.yaml
